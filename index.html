@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>831《数字经济基础》背诵手册</title>
+<style>
+:root{
+  --bg:#f4f6fa; --card:#fff; --ink:#1b2733; --ink2:#4d6072; --ink3:#8598a8;
+  --line:#e3e9f0; --brand:#0a4b7a; --brand2:#1f7a9c; --accent:#c8452b;
+  --ok:#17785b; --okbg:#e6f4ef; --warn:#b8791d; --warnbg:#fdf2e0;
+  --shadow:0 1px 2px rgba(16,38,60,.06),0 8px 24px -12px rgba(16,38,60,.18);
+  --r:14px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;overflow-x:hidden}
+body{
+  background:var(--bg); color:var(--ink);
+  font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input{font-family:inherit;font-size:inherit}
+
+/* ---------- 顶栏 ---------- */
+.topbar{
+  position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+}
+.tb-in{display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:1400px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:9px;font-weight:750;letter-spacing:-.01em;white-space:nowrap}
+.brand .dot{width:9px;height:9px;border-radius:3px;background:linear-gradient(135deg,var(--brand),var(--brand2))}
+.brand small{font-weight:500;color:var(--ink3);font-size:12px;margin-left:2px}
+.grow{flex:1}
+.search{position:relative;flex:1;max-width:380px}
+.search input{
+  width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:10px;
+  background:#f7f9fc;outline:none;transition:.15s;font-size:14px;color:var(--ink)
+}
+.search input:focus{border-color:var(--brand2);background:#fff;box-shadow:0 0 0 3px rgba(31,122,156,.1)}
+.search .ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ink3);font-size:14px}
+.iconbtn{
+  width:36px;height:36px;border-radius:10px;display:none;place-items:center;
+  border:1px solid var(--line);background:#fff;color:var(--ink2);font-size:16px
+}
+.prog{
+  display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2);white-space:nowrap
+}
+.pbar{width:88px;height:6px;border-radius:99px;background:#e6ecf3;overflow:hidden}
+.pbar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--brand2),var(--ok));transition:width .3s}
+
+/* ---------- 布局 ---------- */
+.wrap{display:flex;max-width:1400px;margin:0 auto;align-items:flex-start}
+aside{
+  width:286px;flex:0 0 286px;position:sticky;top:57px;height:calc(100vh - 57px);
+  overflow-y:auto;padding:14px 10px 40px 16px;border-right:1px solid var(--line);
+}
+aside::-webkit-scrollbar{width:8px}
+aside::-webkit-scrollbar-thumb{background:#d3dde7;border-radius:9px;border:2px solid var(--bg)}
+.nav-part{font-size:11px;font-weight:700;letter-spacing:.09em;color:var(--ink3);text-transform:uppercase;margin:16px 0 7px 8px}
+.nav-part:first-child{margin-top:2px}
+.navlink{
+  display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:7px 10px;border-radius:9px;
+  color:var(--ink2);font-size:14px;line-height:1.4;margin-bottom:1px;transition:.12s
+}
+.navlink:hover{background:#eaf0f7;color:var(--ink)}
+.navlink.on{background:var(--brand);color:#fff;font-weight:600;box-shadow:0 4px 10px -4px rgba(10,75,122,.45)}
+.navlink .cnt{margin-left:auto;font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.navlink.on .cnt{color:rgba(255,255,255,.7)}
+.navlink .mini{width:5px;height:5px;border-radius:99px;background:var(--ok);flex:0 0 5px;opacity:0}
+.navlink.hasprog .mini{opacity:1}
+
+main{flex:1;min-width:0;padding:22px 28px 120px}
+.mhead{margin-bottom:16px}
+.crumb{font-size:12px;color:var(--ink3);letter-spacing:.04em;margin-bottom:6px}
+h1{font-size:27px;line-height:1.3;margin:0 0 6px;letter-spacing:-.02em;font-weight:770}
+.sub{color:var(--ink2);font-size:14px}
+
+/* ---------- 工具条 ---------- */
+.tools{
+  position:sticky;top:57px;z-index:40;display:flex;flex-wrap:wrap;gap:7px;align-items:center;
+  padding:9px 0 11px;margin-bottom:8px;background:linear-gradient(var(--bg) 70%,rgba(244,246,250,.85));
+}
+.chip{
+  padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--ink2);
+  font-size:13px;font-weight:550;transition:.13s;white-space:nowrap
+}
+.chip:hover{border-color:#c3d3e2;color:var(--brand)}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.chip .n{opacity:.65;margin-left:4px;font-size:12px}
+.spacer{flex:1}
+.hint{font-size:12px;color:var(--ink3)}
+
+/* ---------- 题目卡 ---------- */
+.group{margin:26px 0 8px;display:flex;align-items:center;gap:10px}
+.group h2{
+  font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--brand);
+  margin:0;padding:4px 11px;background:#e4eef7;border-radius:7px;white-space:nowrap
+}
+.group .gline{flex:1;height:1px;background:var(--line)}
+.group .gcount{font-size:12px;color:var(--ink3)}
+
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden;transition:.16s;scroll-margin-top:110px
+}
+.card:hover{border-color:#cfdbe7}
+.card.hl{border-color:#f0c98a;box-shadow:0 0 0 3px rgba(200,69,43,.07),var(--shadow)}
+.card.done{border-left:3px solid var(--ok)}
+.card.flag{border-left:3px solid var(--accent)}
+
+.cq{
+  display:flex;gap:12px;align-items:flex-start;padding:15px 18px;width:100%;text-align:left;
+}
+.num{
+  flex:0 0 auto;min-width:26px;height:26px;padding:0 6px;border-radius:8px;background:#edf2f8;color:var(--brand);
+  font-size:12px;font-weight:750;display:grid;place-items:center;font-variant-numeric:tabular-nums;margin-top:1px
+}
+.card.done .num{background:var(--okbg);color:var(--ok)}
+.qt{flex:1;font-weight:640;font-size:16px;line-height:1.6;color:var(--ink)}
+.qt .tag{
+  display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:5px;margin-right:7px;
+  vertical-align:1.5px;letter-spacing:.02em
+}
+.tag.mn{background:#e8f0fa;color:#2563a8}
+.tag.jd{background:#e8f6f1;color:#17785b}
+.tag.lt{background:#fdf0e6;color:#b4622a}
+.tag.tx{background:#f2eefb;color:#6a4fb8}
+.tag.al{background:#fceceb;color:#c8452b}
+.tag.rec{background:#eef2f8;color:#4a5f78}
+.tgl{margin-left:auto;flex:0 0 auto;color:var(--ink3);font-size:19px;line-height:1;transition:.2s;user-select:none}
+.card.open .tgl{transform:rotate(180deg)}
+
+.ca{display:none;padding:0 18px 16px 56px;border-top:1px dashed var(--line);margin-top:0}
+.card.open .ca{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ca p{margin:10px 0;color:#2b3b4b}
+.ca p:first-child{margin-top:12px}
+.ca strong{color:#0d3a54;font-weight:700;background:linear-gradient(transparent 62%,#fff3c4 62%);padding:0 1px}
+.ca ul{margin:8px 0;padding-left:20px}
+.ca li{margin:5px 0;color:#2b3b4b}
+.ca li::marker{color:var(--brand2)}
+.ca blockquote{
+  margin:10px 0;padding:9px 13px;background:#f6f9fc;border-left:3px solid var(--brand2);
+  border-radius:0 8px 8px 0;color:#3a4c5c;font-size:14.5px
+}
+.ca code{background:#eef3f8;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#b4472e}
+.tw{overflow-x:auto;margin:11px 0;border:1px solid var(--line);border-radius:10px}
+.ca table{border-collapse:collapse;width:100%;font-size:14px;min-width:420px}
+.ca th{background:#f1f6fa;color:var(--brand);font-weight:700;text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.ca td{padding:9px 12px;border-bottom:1px solid #eef2f7;vertical-align:top;color:#2b3b4b}
+.ca tr:last-child td{border-bottom:0}
+.ca tr:hover td{background:#fafcfe}
+
+.actions{display:flex;gap:7px;flex-wrap:wrap;padding:0 18px 14px 56px;align-items:center}
+.act{
+  padding:5px 11px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink2);
+  font-size:12.5px;font-weight:600;transition:.13s;display:inline-flex;gap:5px;align-items:center
+}
+.act:hover{background:#f4f8fc;border-color:#c8d8e6;color:var(--brand)}
+.act.ok.on{background:var(--okbg);border-color:#a8d8c9;color:var(--ok)}
+.act.fl.on{background:#fdeceb;border-color:#f1bfb8;color:var(--accent)}
+.act .k{font-size:10px;opacity:.55;border:1px solid currentColor;border-radius:3px;padding:0 3px;line-height:1.4}
+
+/* 背诵模式：隐藏答案 */
+body.recite .card:not(.open) .ca{display:none}
+body.recite .card .cq{cursor:pointer}
+
+/* 分组标题在背诵模式下保持可见 */
+
+/* ---------- 空状态 / 底栏 ---------- */
+.empty{text-align:center;padding:70px 20px;color:var(--ink3)}
+.empty .big{font-size:40px;margin-bottom:10px;opacity:.5}
+.foot{
+  margin-top:40px;padding-top:18px;border-top:1px solid var(--line);
+  color:var(--ink3);font-size:12.5px;line-height:1.9
+}
+.foot b{color:var(--ink2)}
+
+.fab{
+  position:fixed;right:20px;bottom:20px;z-index:50;display:flex;flex-direction:column;gap:9px
+}
+.fab button{
+  width:46px;height:46px;border-radius:50%;background:#fff;border:1px solid var(--line);
+  box-shadow:0 6px 18px -6px rgba(16,38,60,.3);display:grid;place-items:center;font-size:18px;color:var(--brand);
+  transition:.15s
+}
+.fab button:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(16,38,60,.4)}
+.fab button:active{transform:scale(.94)}
+
+.scrim{position:fixed;inset:0;background:rgba(12,26,40,.42);z-index:70;display:none;backdrop-filter:blur(2px)}
+.scrim.on{display:block}
+
+/* ---------- 移动端 ---------- */
+@media (max-width:960px){
+  aside{
+    position:fixed;left:0;top:0;bottom:0;height:100vh;width:290px;flex:none;z-index:80;
+    background:#fff;transform:translateX(-102%);transition:transform .24s cubic-bezier(.4,0,.2,1);
+    box-shadow:8px 0 30px -12px rgba(16,38,60,.35);padding-top:16px
+  }
+  aside.on{transform:none}
+  .iconbtn{display:grid}
+  main{padding:16px 14px 110px}
+  h1{font-size:21px}
+  .brand small{display:none}
+  .search{max-width:none}
+  .ca{padding:0 14px 14px 14px}
+  .actions{padding:0 14px 14px 14px}
+  .cq{padding:13px 14px;gap:9px}
+  .qt{font-size:15px}
+  .tools{top:55px}
+  .prog .pbar{width:52px}
+}
+@media (max-width:520px){
+  .tb-in{flex-wrap:wrap;row-gap:8px;padding:8px 12px}
+  .brand{font-size:15px;order:1}
+  .prog{order:2}
+  .search{order:3;flex:1 0 100%;max-width:none}
+  .prog span.lbl{display:none}
+  .hint{display:none}
+  .tools{gap:6px}
+  .chip{padding:5px 10px;font-size:12.5px}
+}
+@media print{
+  aside,.topbar,.tools,.actions,.fab,.scrim{display:none!important}
+  .ca{display:block!important}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ddd}
+  main{padding:0}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-in">
+    <button class="iconbtn" id="menuBtn" aria-label="目录">☰</button>
+    <div class="brand"><span class="dot"></span>831 数字经济基础<small>背诵手册</small></div>
+    <div class="search">
+      <span class="ico">🔍</span>
+      <input id="q" type="search" placeholder="搜索考点关键词，如 网络外部性" autocomplete="off">
+    </div>
+    <div class="grow"></div>
+    <div class="prog" title="已掌握进度">
+      <span class="lbl">掌握</span>
+      <div class="pbar"><i id="pbar"></i></div>
+      <span id="ptxt">0%</span>
+    </div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<div class="wrap">
+  <aside id="side"></aside>
+  <main id="main"></main>
+</div>
+
+<div class="fab">
+  <button id="topBtn" title="回到顶部">↑</button>
+  <button id="toggleAll" title="展开/收起全部">⇕</button>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  'use strict';
+  var DATA = window.__DATA__;
+  var LS = 'moss831:v1';
+  var state = {
+    view: 'all',          // all | recite | unknown | flag | done
+    section: null,
+    query: '',
+    open: {},             // 展开状态
+    done: {},             // 已掌握
+    flag: {}              // 待复习
+  };
+  try{ var s = JSON.parse(localStorage.getItem(LS)||'{}');
+       if(s.done) state.done=s.done; if(s.flag) state.flag=s.flag;
+       if(s.view) state.view=s.view; if(s.section) state.section=s.section; }catch(e){}
+  function save(){
+    try{ localStorage.setItem(LS, JSON.stringify(
+      {done:state.done, flag:state.flag, view:state.view, section:state.section}
+    )); }catch(e){}
+  }
+
+  // ---------- 索引 ----------
+  var ALL = [];
+  DATA.sections.forEach(function(sec, si){
+    sec.groups.forEach(function(g, gi){
+      g.items.forEach(function(it, ii){
+        ALL.push({id:it.id, q:it.q, a:it.a, note:!!it.note,
+                  sec:sec.title, secIdx:si, grp:g.title, part:sec.part||''});
+      });
+    });
+  });
+  // 附录：无小题的大段速记内容，作为整块卡片参与搜索与浏览
+  DATA.sections.forEach(function(sec, si){
+    if(sec.groups && sec.groups.length) return;
+    if(!sec.body) return;
+    ALL.push({id:'ap'+si, q:sec.title, a:sec.body, note:true,
+              sec:sec.title, secIdx:si, grp:'速记清单', part:sec.part||''});
+  });
+  var BY_ID = {};
+  ALL.forEach(function(x){ BY_ID[x.id]=x; });
+
+  function kindOf(grpTitle, q){
+    if(/名词/.test(grpTitle)) return ['mn','名词'];
+    if(/简答|思考题/.test(grpTitle)) return ['jd','简答'];
+    if(/论述/.test(grpTitle)) return ['lt','论述'];
+    if(/案例/.test(grpTitle)) return ['al','案例'];
+    if(/单选/.test(grpTitle)) return ['tx','单选'];
+    return ['jd','要点'];
+  }
+  function plain(html){
+    var d=document.createElement('div'); d.innerHTML=html;
+    return (d.textContent||'').replace(/\s+/g,' ');
+  }
+  ALL.forEach(function(x){
+    x.kind = x.id.indexOf('ap')===0 ? ['rec','速记'] : kindOf(x.grp, x.q);
+    x.plain = plain(x.q+' '+x.a);
+  });
+
+  // ---------- 侧栏 ----------
+  var side = document.getElementById('side');
+  function renderSide(){
+    var parts = {};
+    ALL.forEach(function(x){
+      (parts[x.part] = parts[x.part] || new Set()).add(x.secIdx);
+    });
+    var LABEL = {'第一部分　按大纲六大专题整理':'按大纲专题',
+                 '第二部分　各章课后习题详解':'各章课后习题'};
+    var html = '';
+    Object.keys(parts).forEach(function(p){
+      html += '<div class="nav-part">'+ (LABEL[p]||p) +'</div>';
+      parts[p].forEach(function(si){
+        var sec = DATA.sections[si];
+        var n = ALL.filter(function(x){return x.secIdx===si;}).length;
+        var d = ALL.filter(function(x){return x.secIdx===si && state.done[x.id];}).length;
+        html += '<button class="navlink'+(String(si)===String(state.section)?' on':'')+(d?' hasprog':'')+
+                '" data-si="'+si+'"><span class="mini"></span>'+
+                esc(sec.title)+'<span class="cnt">'+(d?d+'/'+n:n)+'</span></button>';
+      });
+    });
+    side.innerHTML = html;
+    side.querySelectorAll('.navlink').forEach(function(b){
+      b.onclick = function(){
+        var si = b.dataset.si;
+        state.section = (String(state.section)===String(si)) ? null : si;
+        state.query=''; document.getElementById('q').value='';
+        save(); render(); closeDrawer();
+      };
+    });
+  }
+
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // ---------- 主区 ----------
+  var main = document.getElementById('main');
+
+  function filtered(){
+    var q = state.query.trim().toLowerCase();
+    return ALL.filter(function(x){
+      if(state.section!==null && x.secIdx!==Number(state.section)) return false;
+      if(state.view==='unknown' && state.done[x.id]) return false;
+      if(state.view==='done' && !state.done[x.id]) return false;
+      if(state.view==='flag' && !state.flag[x.id]) return false;
+      if(q && x.plain.toLowerCase().indexOf(q)<0) return false;
+      return true;
+    });
+  }
+
+  function progress(){
+    var n = ALL.filter(function(x){ return !x.note; }).length;
+    var d = ALL.filter(function(x){ return state.done[x.id] && !x.note; }).length;
+    var p = n? Math.round(d/n*100):0;
+    document.getElementById('pbar').style.width = p+'%';
+    document.getElementById('ptxt').textContent = p+'%';
+  }
+
+  function render(){
+    renderSide();
+    progress();
+    var list = filtered();
+    var h = '';
+
+    // 标题
+    if(state.query.trim()){
+      h += '<div class="mhead"><div class="crumb">搜索结果</div><h1>“'+esc(state.query)+'”</h1>'+
+           '<div class="sub">共 '+list.length+' 条匹配</div></div>';
+    }else if(state.section!==null){
+      var sec = DATA.sections[Number(state.section)];
+      var sub = (sec.groups&&sec.groups.length)
+        ? sec.groups.map(function(g){return esc(g.title)+' '+g.items.length;}).join('　·　')
+        : '速记清单';
+      h += '<div class="mhead"><div class="crumb">'+esc(sec.part||'')+'</div><h1>'+esc(sec.title)+'</h1>'+
+           '<div class="sub">'+sub+'</div></div>';
+    }else{
+      var nd = ALL.filter(function(x){return state.done[x.id] && !x.note;}).length;
+      var nf = ALL.filter(function(x){return state.flag[x.id];}).length;
+      h += '<div class="mhead"><div class="crumb">李三希《数字经济概论》· 华南理工大学 831</div>'+
+           '<h1>数字经济基础 · 背诵手册</h1>'+
+           '<div class="sub">共 '+ALL.filter(function(x){return !x.note;}).length+' 个考点　·　已掌握 '+nd+'　·　待复习 '+nf+
+           '　·　点击题目展开答案，答案中<span style="background:linear-gradient(transparent 62%,#fff3c4 62%)">高亮</span>处为采分点</div></div>';
+    }
+
+    // 工具条
+    var cntAll = ALL.length, cntFlag=0, cntDone=0;
+    ALL.forEach(function(x){ if(state.flag[x.id])cntFlag++; if(state.done[x.id])cntDone++; });
+    h += '<div class="tools">';
+    h += chip('all','全部',cntAll) + chip('recite','背诵模式',null) +
+         chip('unknown','未掌握',cntAll-cntDone) + chip('flag','待复习',cntFlag) + chip('done','已掌握',cntDone);
+    h += '<div class="spacer"></div><div class="hint">空格 展开/收起　·　J/K 上下题　·　D 标记掌握</div>';
+    h += '</div>';
+
+    if(!list.length){
+      h += '<div class="empty"><div class="big">🔍</div><div>没有匹配的考点，试试更短的关键词，或切换上方筛选。</div></div>';
+      main.innerHTML = h; bindTools(); return;
+    }
+
+    // 按 section + group 渲染
+    var lastSec=-1, lastGrp='';
+    list.forEach(function(x){
+      if(x.secIdx!==lastSec){
+        if(lastSec!==-1) h += '</div>';
+        lastSec = x.secIdx; lastGrp='';
+        if(state.section===null){
+          h += '<div class="group"><h2>'+esc(x.sec)+'</h2><div class="gline"></div></div>';
+        }
+      }
+      if(x.grp!==lastGrp){
+        lastGrp = x.grp;
+        if(x.grp!=='速记清单'){
+          h += '<div class="group"><h2>'+esc(x.grp)+'</h2><div class="gline"></div>'+
+               '<span class="gcount">'+list.filter(function(y){return y.grp===x.grp && y.secIdx===x.secIdx;}).length+' 题</span></div>';
+        }
+      }
+      h += card(x);
+    });
+
+    h += '<div class="foot">'+
+         '<b>使用提示</b>　·　「背诵模式」下先自述答案再点开核对；答不上来的点「待复习」·<br>'+
+         '数据来源：李三希主编《数字经济概论》（中国人民大学出版社，2023）与 831 考试大纲　·　进度保存在本机浏览器'+
+         '</div>';
+
+    main.innerHTML = h;
+    bindTools();
+    bindCards();
+  }
+
+  function chip(key,label,n){
+    var on = state.view===key ? ' on':'';
+    var badge = (n===null||n===undefined)?'':'<span class="n">'+n+'</span>';
+    return '<button class="chip'+on+'" data-view="'+key+'">'+label+badge+'</button>';
+  }
+
+  function isOpen(x){
+    // 速记清单默认展开，便于直接浏览
+    return x.note ? (state.open[x.id] !== false) : !!state.open[x.id];
+  }
+
+  function card(x){
+    var cls='card';
+    if(isOpen(x)) cls+=' open';
+    if(state.done[x.id]) cls+=' done';
+    else if(state.flag[x.id]) cls+=' flag';
+    var tag = x.note? '<span class="tag rec">速记</span>' : '<span class="tag '+x.kind[0]+'">'+x.kind[1]+'</span>';
+    var label = x.note ? '展开／收起全文' : esc(x.q);
+    return '<article class="'+cls+'" id="c-'+x.id+'" data-id="'+x.id+'">'+
+      '<button class="cq" data-act="toggle">'+
+        '<span class="num">'+ (x.note? '★' : (ALL.indexOf(x)+1)) +'</span>'+
+        '<span class="qt">'+tag+label+'</span>'+
+        '<span class="tgl">⌄</span>'+
+      '</button>'+
+      '<div class="ca">'+x.a+'</div>'+
+      '<div class="actions">'+
+        '<button class="act ok'+(state.done[x.id]?' on':'')+'" data-act="done">✓ 已掌握 <span class="k">D</span></button>'+
+        '<button class="act fl'+(state.flag[x.id]?' on':'')+'" data-act="flag">★ 待复习</button>'+
+        '<button class="act" data-act="copy">⧉ 复制</button>'+
+      '</div>'+
+    '</article>';
+  }
+
+  function bindTools(){
+    main.querySelectorAll('.chip').forEach(function(b){
+      b.onclick = function(){
+        var v = b.dataset.view;
+        if(v==='recite'){
+          document.body.classList.toggle('recite');
+          b.classList.toggle('on');
+          // 进入背诵模式时全部收起
+          if(document.body.classList.contains('recite')){
+            state.open={};
+            ALL.forEach(function(x){ if(x.note) state.open[x.id]=false; });
+            save();
+            main.querySelectorAll('.card').forEach(function(c){c.classList.remove('open');});
+          }
+          return;
+        }
+        state.view = (state.view===v)?'all':v;
+        save(); render();
+      };
+    });
+    if(document.body.classList.contains('recite')){
+      var r = main.querySelector('.chip[data-view="recite"]');
+      if(r) r.classList.add('on');
+    }
+  }
+
+  function bindCards(){
+    main.querySelectorAll('.card').forEach(function(cardEl){
+      var id = cardEl.dataset.id;
+      cardEl.querySelectorAll('[data-act]').forEach(function(btn){
+        btn.onclick = function(ev){
+          ev.stopPropagation(); ev.preventDefault();
+          var a = btn.dataset.act;
+          if(a==='toggle'){
+            state.open[id] = !isOpen(BY_ID[id]);
+            cardEl.classList.toggle('open', state.open[id]);
+          }else if(a==='done'){
+            if(state.done[id]) delete state.done[id]; else { state.done[id]=1; delete state.flag[id]; }
+            refreshCard(cardEl, id); progress(); renderSide();
+          }else if(a==='flag'){
+            if(state.flag[id]) delete state.flag[id]; else { state.flag[id]=1; delete state.done[id]; }
+            refreshCard(cardEl, id); progress(); renderSide();
+          }else if(a==='copy'){
+            var x = BY_ID[id];
+            var txt = x.q + '\n\n' + plain(x.a);
+            navigator.clipboard && navigator.clipboard.writeText(txt).then(function(){
+              var old = btn.textContent; btn.textContent='✓ 已复制';
+              setTimeout(function(){ btn.textContent=old; },1200);
+            });
+          }
+          save();
+        };
+      });
+    });
+  }
+
+  function refreshCard(cardEl, id){
+    cardEl.classList.toggle('done', !!state.done[id]);
+    cardEl.classList.toggle('flag', !state.done[id] && !!state.flag[id]);
+    var d = cardEl.querySelector('[data-act="done"]');
+    var f = cardEl.querySelector('[data-act="flag"]');
+    if(d) d.classList.toggle('on', !!state.done[id]);
+    if(f) f.classList.toggle('on', !!state.flag[id]);
+  }
+
+  // ---------- 快捷键 ----------
+  var cursor = -1;
+  document.addEventListener('keydown', function(e){
+    var t = e.target;
+    if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA')) {
+      if(e.key==='Escape'){ t.value=''; state.query=''; render(); }
+      return;
+    }
+    var cards = [].slice.call(main.querySelectorAll('.card'));
+    if(!cards.length) return;
+    if(e.key===' '||e.key==='Enter'){
+      if(cursor<0) cursor=0;
+      var el=cards[cursor]; if(!el) return;
+      e.preventDefault();
+      var openNow = !isOpen(BY_ID[el.dataset.id]);
+      state.open[el.dataset.id] = openNow;
+      el.classList.toggle('open', openNow); save();
+    }else if(e.key==='j'||e.key==='J'||e.key==='ArrowDown'){
+      e.preventDefault(); cursor = Math.min(cards.length-1, cursor+1); focusCard(cards[cursor]);
+    }else if(e.key==='k'||e.key==='K'||e.key==='ArrowUp'){
+      e.preventDefault(); cursor = Math.max(0, cursor-1); focusCard(cards[cursor]);
+    }else if(e.key==='d'||e.key==='D'){
+      var el2=cards[cursor]; if(!el2) return;
+      var id=el2.dataset.id;
+      if(state.done[id]) delete state.done[id]; else { state.done[id]=1; delete state.flag[id]; }
+      refreshCard(el2,id); progress(); renderSide(); save();
+    }
+  });
+  function focusCard(el){
+    if(!el) return;
+    main.querySelectorAll('.card.hl').forEach(function(c){c.classList.remove('hl');});
+    el.classList.add('hl');
+    el.scrollIntoView({block:'center', behavior:'smooth'});
+  }
+
+  // ---------- 搜索 ----------
+  var timer;
+  document.getElementById('q').addEventListener('input', function(e){
+    clearTimeout(timer);
+    var v = e.target.value;
+    timer = setTimeout(function(){ state.query=v; render(); }, 130);
+  });
+
+  // ---------- 抽屉 ----------
+  var sideEl = document.getElementById('side'), scrim = document.getElementById('scrim');
+  document.getElementById('menuBtn').onclick = function(){
+    sideEl.classList.add('on'); scrim.classList.add('on');
+  };
+  scrim.onclick = closeDrawer;
+  function closeDrawer(){ sideEl.classList.remove('on'); scrim.classList.remove('on'); }
+
+  // ---------- 浮动按钮 ----------
+  document.getElementById('topBtn').onclick = function(){ window.scrollTo({top:0,behavior:'smooth'}); };
+  document.getElementById('toggleAll').onclick = function(){
+    var cards = [].slice.call(main.querySelectorAll('.card'));
+    var anyClosed = cards.some(function(c){ return !c.classList.contains('open'); });
+    cards.forEach(function(c){
+      c.classList.toggle('open', anyClosed);
+      state.open[c.dataset.id] = anyClosed;
+    });
+    save();
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>
